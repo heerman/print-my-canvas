@@ -1,0 +1,43 @@
+<!doctype html>
+<meta charset="utf-8">
+<style>
+  html,body { margin: 0 }
+  @page { size: letter; margin: 0 }
+  canvas { display: block; width: 8.5in; height: 11in }
+</style>
+
+<canvas id="printable-area" width="2550" height="3300" />
+
+<script>
+const canvas = document.getElementById('printable-area')
+const c = canvas.getContext('2d', { alpha: false })
+const w = canvas.width
+const h = canvas.height
+
+// background
+c.fillStyle = "#fff"
+c.fillRect(0, 0, w, h)
+
+// example generative sketch
+for (let i=0; i<w; i+=w/70) {
+  for (let j=0; j<h; j+=h/70) {
+    const px = i
+    const py = j
+    const r = Math.random() * 4 + 1
+    c.beginPath()
+    c.arc(px, py, r, 0, Math.PI*2)
+    c.fillStyle = `rgba(0,0,0)`
+    c.fill()
+    // c.lineWidth = 12
+    c.stroke()
+  }
+}
+
+// example text
+c.font = "240px courier, monospace"
+c.fillStyle = "#000"
+for (let i=0; i<h; i+=200) {
+  c.fillText("print my", i/3 - 200, i+100)
+  c.fillText("canvas", i/4 + 1100, i+150)
+}
+</script>
